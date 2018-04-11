@@ -1,17 +1,25 @@
 # bob
 
-FIXME: description
+Experimental buid server in CLJ (elwood-parent reboot) 
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Please refer to Leiningen installation page. 
+
+(See https://leiningen.org/#install)
 
 ## Usage
 
-FIXME: explanation
+### During development mode
 
-    $ java -jar bob-0.1.0-standalone.jar [args]
+Run the web server:
 
+    $ lein run
+
+Basic test:
+
+    $ curl -H "Content-Type: application/json" localhost:3000
+    
 ## Options
 
 FIXME: listing of options this app accepts.
