@@ -1,8 +1,9 @@
 (ns bob.core
   (:require
    [bob.executor :as executor]
+   [bob.routes.app-routes :as app-routes]
+   [compojure.core :refer [routes]]
    [ring.adapter.jetty :as jetty]
-;   [ring.middleware.json :refer [wrap-json-response]]
    [ring.middleware.format :refer [wrap-restful-format]]
    [ring.middleware.reload :refer [wrap-reload]]
    [ring.util.http-response :as response])
@@ -21,9 +22,8 @@
   [& args]
   (executor/test-exec)
   (jetty/run-jetty
-   (-> #'handler
+   (-> app-routes/default-routes
        wrap-reload
-       ;wrap-json-response
        wrap-formats)
    {:port 3000
     :join? false}))

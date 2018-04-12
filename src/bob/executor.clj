@@ -5,7 +5,8 @@
             ThreadPoolExecutor)
             (java.io BufferedInputStream)
             (java.nio.charset StandardCharsets))
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.tools.logging :as log]))
 
 ;; thread-pool related values
 (def core-pool 2)
@@ -81,7 +82,9 @@
       (try
         (let [process (exec command)]
           (redir-output process)
-          (.waitFor process))))))
+          (.waitFor process))
+        (catch Exception e
+          (log/error e "process failed"))))))
 
 ;; submit a command
 (defn submit-command [command]
@@ -89,8 +92,9 @@
       (.submit (create-task command))))
 
 (defn test-exec []
-  (submit-command "ls /")
-  (.shutdown build-executor)
-  (Thread/sleep 5000)
-  (println "in-mem" @in-mem))
+  (let [ft (submit-command "ls /")]
+    (log/info "exit status code" (.get ft))
+    (log/info "in-mem" @in-mem)
+    (reset! in-mem "")
+    (log/info "after reset in-mem" @in-mem)))
 
