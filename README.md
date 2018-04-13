@@ -18,7 +18,7 @@ Run the web server:
 
 Basic test:
 
-    $ curl -H "Content-Type: application/json" localhost:3000
+    $ curl -X POST -H "Content-Type: application/json" localhost:3000/exec/100
     
 ## Options
 
