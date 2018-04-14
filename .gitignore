@@ -27,3 +27,6 @@ pom.xml.asc
 log
 *.log
 *.patch
+
+# ides
+*.idea
