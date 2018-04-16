@@ -5,15 +5,19 @@
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [compojure "1.6.0"]
+                 [environ "1.1.0"]
                  [metosin/ring-http-response "0.9.0"]
                  [org.clojure/tools.logging "0.4.0"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-jetty-adapter "1.6.3"]
                  [ring-middleware-format "0.7.2"]]
   :ring {:handler bob.core/main}
-  :plugins [[lein-ring "0.12.1"]]
+  :plugins [[lein-ring "0.12.1"]
+            [lein-environ "1.1.0"]]
   :main ^:skip-aot bob.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}
+  :profiles {:uberjar {:aot :all
+                       :source-paths ["env/prod"]}
              :dev {:dependencies
-                   [[ring/ring-devel "1.6.3"]]}})
+                   [[ring/ring-devel "1.6.3"]]
+                   :source-paths ["env/dev"]}})

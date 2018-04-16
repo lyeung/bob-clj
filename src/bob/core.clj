@@ -1,21 +1,16 @@
 (ns bob.core
   (:require
+   [bob.env :as env]
    [bob.executor :as executor]
    [bob.routes.app-routes :as app-routes]
+   [bob.env :as env]
    [compojure.core :refer [routes]]
    [ring.adapter.jetty :as jetty]
-   [ring.middleware.format :refer [wrap-restful-format]]
-   [ring.middleware.reload :refer [wrap-reload]]
    [ring.util.http-response :as response])
   (:gen-class))
 
 (defn handler [request]
   (response/ok {:foo (:remote-addr request)}))
-
-(defn wrap-formats [handler]
-  (wrap-restful-format
-   handler
-   {:formats [:json-kw :transit-json :transit-msgpack]}))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -23,8 +18,7 @@
   (executor/test-exec)
   (jetty/run-jetty
    (-> app-routes/default-routes
-       wrap-reload
-       wrap-formats)
+       env/wrap-comp)
    {:port 3000
     :join? false}))
 
