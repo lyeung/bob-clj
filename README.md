@@ -4,13 +4,25 @@ Experimental buid server in CLJ (elwood-parent reboot)
 
 ## Installation
 
-Please refer to Leiningen installation page. 
+* Install Leiningen. (See https://leiningen.org/#install)
 
-(See https://leiningen.org/#install)
+* Install Docker. (See https://docs.docker.com/install)
 
 ## Usage
 
 ### During development mode
+
+Mark docker scripts as executable:
+
+    $ chmod +x docker/\*.sh
+
+Run the dockerised Redis service:
+
+    $ docker/redis-local-test.sh
+
+Run the docker linked Redis CLI:
+
+    $ docker/redis-cli-local-test.sh
 
 Run the web server:
 
