@@ -14,7 +14,7 @@ Experimental buid server in CLJ (elwood-parent reboot)
 
 Mark docker scripts as executable:
 
-    $ chmod +x docker/\*.sh
+    $ chmod +x docker/*.sh
 
 Run the dockerised Redis service:
 
