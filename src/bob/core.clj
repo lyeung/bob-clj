@@ -1,30 +1,44 @@
 (ns bob.core
   (:require
+   [bob.config :as config]
+   [bob.db.core :as db]
+   [bob.env :as env]
    [bob.executor :as executor]
    [bob.routes.app-routes :as app-routes]
+   [bob.env :as env]
+   [clojure.tools.logging :as log]
    [compojure.core :refer [routes]]
+   [mount.core :as mount]
    [ring.adapter.jetty :as jetty]
-   [ring.middleware.format :refer [wrap-restful-format]]
-   [ring.middleware.reload :refer [wrap-reload]]
-   [ring.util.http-response :as response])
+   [ring.util.http-response :as response]
+   [taoensso.carmine :as car :refer [wcar]])
   (:gen-class))
 
 (defn handler [request]
   (response/ok {:foo (:remote-addr request)}))
 
-(defn wrap-formats [handler]
-  (wrap-restful-format
-   handler
-   {:formats [:json-kw :transit-json :transit-msgpack]}))
+(mount/defstate http-server
+  :start
+  (jetty/run-jetty
+   (-> app-routes/default-routes
+       env/wrap-comp)
+   {:port 3000
+    :join? false}))
+
+(defn start-app [args]
+  (doseq [component (-> args
+                        mount/start-with-args
+                        :started)]
+    (log/info component "started..."))
+  (clojure.core.async/thread
+    (while (true? true)
+      (do
+        (db/do-work)
+        (Thread/sleep 5000)))))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (executor/test-exec)
-  (jetty/run-jetty
-   (-> app-routes/default-routes
-       wrap-reload
-       wrap-formats)
-   {:port 3000
-    :join? false}))
+  (start-app args))
 
