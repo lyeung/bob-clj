@@ -20,9 +20,11 @@
 (defn remove-set [k]
   (wcar *conn* (car/del k)))
 
-;; save hash
-(defn save-hash [k sk v]
-  (wcar *conn* (car/hset k sk v)))
+;; save hash with multiple key/value pairs
+(defn save-hash
+  [k v & args]
+   (wcar *conn* (car/hmset k v args)
+   ))
 
 ;; find hash by key and subkey
 (defn find-hash [k sk]
