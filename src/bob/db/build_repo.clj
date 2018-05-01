@@ -44,5 +44,19 @@
 ;; find specs
 (defn find-by-key [k]
   (let [v (dbcore/find-hash k)]
-    (apply conj {:id (id-from-key k)}
-          (tuplize v))))
+    (if (not-empty v)
+      (apply conj {:id (id-from-key k)}
+             (tuplize v)))))
+
+;; remove
+(defn remove-by-key [k]
+  (let [coll (->> k
+        (dbcore/find-hash)
+        (take-nth 2)
+        (concat ["id"]))]
+    (loop [sks coll]
+      (if (empty? sks)
+        nil
+        (do
+          (dbcore/remove-hash k (first sks))
+          (recur (rest sks)))))))
