@@ -45,35 +45,37 @@
          :url repoUrl}]
     (testing "save"
       (dbcore/remove-hash "build-repo:hash123"
+                          "id")
+      (dbcore/remove-hash "build-repo:hash123"
                           "name")
       (dbcore/remove-hash "build-repo:hash123"
                           "url")
-      (is (= (nil?
-              (dbcore/find-hash
-               "build-repo:hash123"
-               "id"))))
-      (is (= (nil?
-              (dbcore/find-hash
-               "build-repo:hash123"
-               "name"))))
-      (is (= (nil?
-              (dbcore/find-hash
-               "build-repo:hash123"
-               "url"))))
+      (is (empty?
+           (first (dbcore/find-hash
+                   "build-repo:hash123"
+                   "id"))))
+      (is (empty?
+           (first (dbcore/find-hash
+                   "build-repo:hash123"
+                   "name"))))
+      (is (empty?
+           (first (dbcore/find-hash
+                   "build-repo:hash123"
+                   "url"))))
       (build-repo/save build-repo)
 
-      (is (not (nil?
-                (dbcore/find-hash
-                 "build-repo:hash123"
-                 "id"))))
-      (is (not (nil?
-                (dbcore/find-hash
-                 "build-repo:hash123"
-                 "name"))))
-      (is (not (nil?
-               (dbcore/find-hash
-                "build-repo:hash123"
-                "url")))))
+      (is (empty?
+             (first (dbcore/find-hash
+                     "build-repo:hash123"
+                     "id"))))
+      (is (= "foo"
+             (first (dbcore/find-hash
+                     "build-repo:hash123"
+                     "name"))))
+      (is (= repoUrl
+             (first (dbcore/find-hash
+                     "build-repo:hash123"
+                     "url")))))
     (testing "find"
       (dbcore/remove-hash "build-repo:hash123"
                           "name")

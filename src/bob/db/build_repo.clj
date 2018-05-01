@@ -5,13 +5,13 @@
 ;; keyname constant
 (def keyname "build-repo:")
 
-;; build-repo-key specs and fn
+;; build repo key
 (defn build-repo-key [build-repo]
   (->> build-repo
        (:id)
        (str keyname)))
 
-;; id-from-key
+;; id from key
 (defn id-from-key [k]
   (let [result (re-matches #"\S+:(.+)" k)]
     (if (nil? result)
@@ -30,7 +30,7 @@
   (let [args (build-repo-content build-repo)]
     (apply dbcore/save-hash args)))
 
-;; tuplize specs
+;; tuplize
 (defn tuplize [coll]
   (loop [result []
          c coll]
@@ -41,14 +41,14 @@
                     (second c)})
              (nthrest c 2)))))
 
-;; find specs
+;; find by key
 (defn find-by-key [k]
   (let [v (dbcore/find-hash k)]
     (if (not-empty v)
       (apply conj {:id (id-from-key k)}
              (tuplize v)))))
 
-;; remove
+;; remove by key
 (defn remove-by-key [k]
   (let [coll (->> k
         (dbcore/find-hash)
