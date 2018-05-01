@@ -30,7 +30,7 @@
   (let [args (build-repo-content build-repo)]
     (apply dbcore/save-hash args)))
 
-;; tuplize specs:w
+;; tuplize specs
 (defn tuplize [coll]
   (loop [result []
          c coll]
