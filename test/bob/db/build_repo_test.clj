@@ -7,13 +7,13 @@
 
 (use-fixtures :once db-fixture/init-db)
 
-(def repoUrl "https://github.com/lyeung/bob-clj")
+(def repo-url "https://github.com/lyeung/bob-clj")
 
 (deftest test-helper-fns
   (let [build-repo
         {:id "hash123"
          :name "foo"
-         :url repoUrl}]
+         :url repo-url}]
     (testing "tuplize"
       (let [coll [:a 1 :b 2 :c 3 :d 4 :e 5]]
         (is (= [{:a 1}, {:b 2}, {:c 3} {:d 4} {:e 5}]
@@ -28,21 +28,21 @@
       (is (= ["name"
               "foo"
               "url"
-              repoUrl]
+              repo-url]
              (build-repo/build-repo-subkey-vals build-repo))))
     (testing "build-repo content"
       (is (= (list "build-repo:hash123"
                    "name"
                    "foo"
                    "url"
-                   repoUrl)
+                   repo-url)
              (build-repo/build-repo-content build-repo))))))
 
 (deftest test-build-repo
   (let [build-repo
         {:id "hash123"
          :name "foo"
-         :url repoUrl}]
+         :url repo-url}]
     (testing "save"
       (dbcore/remove-hash "build-repo:hash123"
                           "name")
@@ -66,7 +66,7 @@
              (first (dbcore/find-hash
                      "build-repo:hash123"
                      "name"))))
-      (is (= repoUrl
+      (is (= repo-url
              (first (dbcore/find-hash
                      "build-repo:hash123"
                      "url")))))
