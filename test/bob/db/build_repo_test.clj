@@ -45,15 +45,9 @@
          :url repoUrl}]
     (testing "save"
       (dbcore/remove-hash "build-repo:hash123"
-                          "id")
-      (dbcore/remove-hash "build-repo:hash123"
                           "name")
       (dbcore/remove-hash "build-repo:hash123"
                           "url")
-      (is (empty?
-           (first (dbcore/find-hash
-                   "build-repo:hash123"
-                   "id"))))
       (is (empty?
            (first (dbcore/find-hash
                    "build-repo:hash123"
@@ -85,8 +79,6 @@
        (is (= build-repo
               (build-repo/find-by-key "build-repo:hash123"))))
     (testing "remove"
-      (dbcore/remove-hash "build-repo:hash123"
-                          "id")
       (dbcore/remove-hash "build-repo:hash123"
                           "name")
       (dbcore/remove-hash "build-repo:hash123"
