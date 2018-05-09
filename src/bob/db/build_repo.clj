@@ -60,3 +60,4 @@
         (do
           (dbcore/remove-hash k (first sks))
           (recur (rest sks)))))))
+ 

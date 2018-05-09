@@ -13,6 +13,7 @@
                  [mount "0.1.12"]
                  [org.clojure/tools.logging "0.4.0"]
                  [ring/ring-core "1.6.3"]
+                 [ring/ring-mock "0.3.2"]
                  [ring/ring-jetty-adapter "1.6.3"]
                  [ring-middleware-format "0.7.2"]
                  [org.clojure/core.async "0.4.474"]]
@@ -31,7 +32,10 @@
                            :source-paths ["env/dev/clj"]
                            :resource-paths ["env/dev/resources"]}
              :profiles/dev {}
-             :project/test {:resource-paths ["env/test/resources"]}
+             :project/test {:dependencies
+                            [[ring/ring-mock "0.3.2"]]
+                            :resource-paths
+                            ["env/test/resources"]}
              :profiles/test {}
              }
   )
