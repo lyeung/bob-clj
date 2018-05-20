@@ -4,6 +4,7 @@
   :license {:name "Apache License Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/data.json "0.2.6"]
                  [org.clojure/tools.logging "0.4.0"]
                  [compojure "1.6.0"]
                  [com.taoensso/carmine "2.18.1"]
@@ -11,7 +12,6 @@
                  [environ "1.1.0"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.12"]
-                 [org.clojure/tools.logging "0.4.0"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-mock "0.3.2"]
                  [ring/ring-jetty-adapter "1.6.3"]

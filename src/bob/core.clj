@@ -17,11 +17,15 @@
 (defn handler [request]
   (response/ok {:foo (:remote-addr request)}))
 
+(defn app-routes []
+  (routes
+   (-> #'app-routes/default-routes
+       (env/wrap-comp))))
+
 (mount/defstate http-server
   :start
   (jetty/run-jetty
-   (-> app-routes/default-routes
-       env/wrap-comp)
+   (app-routes)
    {:port 3000
     :join? false}))
 

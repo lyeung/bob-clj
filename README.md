@@ -58,11 +58,11 @@ This requires "redis-local-dev.sh".
 
 POSTing a payload:
 
-    $ curl -X POST -H "Content-Type: application/json" localhost:300/build-repo --data '{"id": "hash123", "name": "foo", "url": "bar"}'
+    $ curl -X POST -H "Content-Type: application/json" localhost:3000/build-repo --data '{"id": "hash123", "name": "foo", "url": "bar"}'
     
 Executing this CURL command should return the payload found above:
     
-    $curl -X GET -H "Content-Type: application/json" localhost:3000/build-repo/hash123
+    $ curl -X GET -H "Content-Type: application/json" localhost:3000/build-repo/hash123
     
 
 #### Testing "executor":
