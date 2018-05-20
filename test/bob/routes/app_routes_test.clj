@@ -29,8 +29,6 @@
                      :get "/build-repo/proj1")
                 resp ((core/app-routes) req)
                 body (slurp (:body resp))]
-            (println "resp:" resp)
-            (println "body:" body)
             (is (= payload
                    (json/read-str body
                                   :key-fn keyword)))))))
